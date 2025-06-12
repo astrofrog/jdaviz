@@ -360,6 +360,12 @@ class JdavizViewerMixin(WithCache):
             # logic there
             return
 
+        layer_uuids = [id(layer) for layer in self.state.layers]
+        if hasattr(self, '_previous_layers'):
+            if layer_uuids == self._previous_layers:
+                return
+        self._previous_layers = layer_uuids
+
         viewer_item = self.jdaviz_app._viewer_item_by_id(self.reference_id)
         if viewer_item is None:
             return
